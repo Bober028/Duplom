@@ -1,0 +1,116 @@
+/* Стилі для модального вікна автентифікації */
+#authModal .modal-content {
+    background-color: #1e3c72;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+#authModal .auth-container {
+    padding: 20px;
+    width: 100%;
+}
+
+#authModal .auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+#authModal .auth-tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+#authModal .auth-tab.active {
+    color: #00ff00;
+    border-bottom: 2px solid #00ff00;
+    margin-bottom: -2px;
+}
+
+#authModal .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#authModal .auth-form input {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+#authModal .auth-form input:focus {
+    outline: none;
+    border-color: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+#authModal .auth-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#authModal .auth-form button {
+    padding: 12px;
+    background-color: #00ff00;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#authModal .auth-form button:hover {
+    background-color: #00cc00;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+#authModal .close {
+    color: #ff3333;
+    font-size: 25px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: color 0.3s ease;
+}
+
+#authModal .close:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+/* Темна тема для модального вікна автентифікації */
+.dark-mode #authModal .modal-content {
+    background-color: #121212;
+}
+
+.dark-mode #authModal .auth-form input {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode #authModal .auth-form button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.dark-mode #authModal .auth-form button:hover {
+    background-color: #45a049;
+} 

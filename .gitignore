@@ -1,0 +1,21 @@
+# Системні файли
+.DS_Store
+Thumbs.db
+
+# Папки середовища розробки
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Залежності
+node_modules/
+package-lock.json
+
+# Файли логів
+*.log
+npm-debug.log*
+
+# Тимчасові файли
+*.tmp
+*.temp 
