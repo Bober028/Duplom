@@ -58,4 +58,4 @@ mobiworld/
 
 ## Ліцензія
 
-MIT License 
+MIT License # Duplom
