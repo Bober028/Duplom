@@ -1,0 +1,82 @@
+[
+    {
+        "id": "iphone14",
+        "brand": "Apple",
+        "model": "iPhone 14",
+        "price": 28000,
+        "image": "images/iphone14.jpg",
+        "description": "Apple iPhone 14 with A15 Bionic chip and improved camera system."
+    },
+    {
+        "id": "iphone13",
+        "brand": "Apple",
+        "model": "iPhone 13",
+        "price": 25000,
+        "image": "images/iphone13.jpg",
+        "description": "Apple iPhone 13 with A15 Bionic chip and great camera."
+    },
+    {
+        "id": "iphone12",
+        "brand": "Apple",
+        "model": "iPhone 12",
+        "price": 20000,
+        "image": "images/iphone12.jpg",
+        "description": "iPhone 12 with A14 chip and dual cameras."
+    },
+    {
+        "id": "iphonese2022",
+        "brand": "Apple",
+        "model": "iPhone SE (2022)",
+        "price": 17000,
+        "image": "images/iphonese2022.jpg",
+        "description": "iPhone SE with A15 Bionic chip in a compact form factor."
+    },
+    {
+        "id": "s23",
+        "brand": "Samsung",
+        "model": "Galaxy S23",
+        "price": 28000,
+        "image": "images/s23.jpg",
+        "description": "Samsung Galaxy S23 with Snapdragon 8 Gen 2 and 200MP camera."
+    },
+    {
+        "id": "s22",
+        "brand": "Samsung",
+        "model": "Galaxy S22",
+        "price": 25000,
+        "image": "images/s22.jpg",
+        "description": "Samsung Galaxy S22 with 120Hz Dynamic AMOLED display and Snapdragon 8 Gen 1."
+    },
+    {
+        "id": "s21",
+        "brand": "Samsung",
+        "model": "Galaxy S21",
+        "price": 22000,
+        "image": "images/s21.jpg",
+        "description": "Samsung Galaxy S21 with AMOLED screen and Snapdragon 888."
+    },
+    {
+        "id": "a54",
+        "brand": "Samsung",
+        "model": "Galaxy A54",
+        "price": 16000,
+        "image": "images/a54.jpg",
+        "description": "Samsung Galaxy A54 with Super AMOLED display and 5G connectivity."
+    },
+    {
+        "id": "xiaomi13",
+        "brand": "Xiaomi",
+        "model": "13",
+        "price": 23000,
+        "image": "images/xiaomi13.jpg",
+        "description": "Xiaomi 13 with Snapdragon 8 Gen 2 and Leica camera system."
+    },
+    {
+        "id": "mi11",
+        "brand": "Xiaomi",
+        "model": "Mi 11",
+        "price": 17000,
+        "image": "images/mi11.jpg",
+        "description": "Xiaomi Mi 11 with Snapdragon 888 and 108MP camera."
+    }
+] 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobiWorld - Вхід</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Повернутись
+    </a>
+
+    <div class="auth-page">
+        <div class="auth-background">
+            <div class="auth-gradient"></div>
+        </div>
+        
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <a href="index.html" class="auth-logo">
+                        <img src="Mobi.png" alt="MobiWorld Logo">
+                        <span>MobiWorld</span>
+                    </a>
+                </div>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showTab('login')">Увійти</button>
+                    <button class="auth-tab" onclick="showTab('register')">Реєстрація</button>
+                </div>
+
+                <div id="login-form" class="auth-form active">
+                    <div class="form-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Пароль" required>
+                    </div>
+                    <button class="auth-submit">Увійти</button>
+                    <div class="auth-links">
+                        <a href="#">Забули пароль?</a>
+                    </div>
+                </div>
+
+                <div id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Ім'я" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Пароль" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Підтвердіть пароль" required>
+                    </div>
+                    <button class="auth-submit">Зареєструватися</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Контакти</h3>
+                <p>Email: info@mobiworld.com</p>
+                <p>Телефон: +380 (XX) XXX-XX-XX</p>
+                <p>Адреса: м. Київ, вул. Технічна, 1</p>
+            </div>
+            <div class="footer-section">
+                <h3>Про нас</h3>
+                <p>MobiWorld - ваш надійний партнер у виборі мобільних телефонів. Ми пропонуємо широкий вибір смартфонів від провідних виробників за найкращими цінами.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Соціальні мережі</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="https://t.me/MobiWorldBest_bot" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MobiWorld. Всі права захищено.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            forms.forEach(form => form.classList.remove('active'));
+            
+            document.querySelector(`.auth-tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`${tabName}-form`).classList.add('active');
+        }
+    </script>
+</body>
+</html> 

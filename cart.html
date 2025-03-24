@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кошик - MobiWorld</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="Mobi.png" alt="MobiWorld Logo">
+                <span class="logo-text">MobiWorld</span>
+            </a>
+        </div>
+        <div class="header-buttons">
+            <button class="auth-button" onclick="showAuthModal()">Увійти/Зареєструватися</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="cart-button" onclick="window.location.href='cart.html'">🛒 Кошик</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Кошик</h1>
+            <div id="cartItems" class="cart-items">
+                <!-- Тут будуть відображатися товари -->
+            </div>
+            <div class="cart-summary">
+                <h2>Підсумок</h2>
+                <p>Загальна сума: <span id="totalPrice">0</span> грн</p>
+                <button class="checkout-button" onclick="checkout()">Оформити замовлення</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Контакти</h3>
+                <p>Email: info@mobiworld.com</p>
+                <p>Телефон: +380 (XX) XXX-XX-XX</p>
+                <p>Адреса: м. Київ, вул. Технічна, 1</p>
+            </div>
+            <div class="footer-section">
+                <h3>Про нас</h3>
+                <p>MobiWorld - ваш надійний партнер у виборі мобільних телефонів. Ми пропонуємо широкий вибір смартфонів від провідних виробників за найкращими цінами.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Соціальні мережі</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="https://t.me/MobiWorldBest_bot" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MobiWorld. Всі права захищено.</p>
+        </div>
+    </footer>
+
+    <!-- Модальне вікно для автентифікації -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Увійти</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Зареєструватися</button>
+            </div>
+            <div id="loginForm" class="auth-form">
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPassword" placeholder="Пароль">
+                <button onclick="login()">Увійти</button>
+            </div>
+            <div id="registerForm" class="auth-form" style="display: none;">
+                <input type="text" id="registerName" placeholder="Ім'я">
+                <input type="email" id="registerEmail" placeholder="Email">
+                <input type="password" id="registerPassword" placeholder="Пароль">
+                <input type="password" id="confirmPassword" placeholder="Підтвердіть пароль">
+                <button onclick="register()">Зареєструватися</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script>
+    // Функція для отримання параметрів з URL
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Функція для завантаження даних про товари
+    async function loadProducts() {
+        try {
+            const [phonesResponse, accessoriesResponse] = await Promise.all([
+                fetch('phones.json'),
+                fetch('accessories.json')
+            ]);
+            
+            const phones = await phonesResponse.json();
+            const accessories = await accessoriesResponse.json();
+            
+            return [...phones, ...accessories];
+        } catch (error) {
+            console.error('Помилка завантаження товарів:', error);
+            return [];
+        }
+    }
+
+    // Функція для додавання товару в кошик
+    async function addProductFromUrl() {
+        const productId = getUrlParameter('product');
+        if (!productId) return;
+
+        const products = await loadProducts();
+        const product = products.find(p => p.id === productId);
+        
+        if (product) {
+            // Додаємо товар в кошик
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({
+                id: product.id,
+                name: product.model || product.name,
+                price: product.price,
+                image: product.image,
+                quantity: 1
+            });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Оновлюємо відображення кошика
+            updateCart();
+            
+            // Видаляємо параметр з URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
+
+    // Викликаємо функцію при завантаженні сторінки
+    document.addEventListener('DOMContentLoaded', addProductFromUrl);
+    </script>
+</body>
+</html> 

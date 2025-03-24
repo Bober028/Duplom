@@ -1,0 +1,74 @@
+[
+    {
+        "id": "glass",
+        "name": "Захисне скло",
+        "price": 299,
+        "image": "images/glass.jpg",
+        "description": "Загартоване захисне скло 9H",
+        "type": "Захист"
+    },
+    {
+        "id": "case",
+        "name": "Чохол Silicon Case",
+        "price": 499,
+        "image": "images/case.jpg",
+        "description": "Силіконовий чохол з мікрофіброю всередині",
+        "type": "Захист"
+    },
+    {
+        "id": "leather-case",
+        "name": "Чохол Leather Case",
+        "price": 1499,
+        "image": "images/leather-case.jpg",
+        "description": "Шкіряний чохол преміум якості",
+        "type": "Захист"
+    },
+    {
+        "name": "Apple AirPods Pro 2",
+        "type": "headphones",
+        "brand": "Apple",
+        "price": 11999,
+        "description": "Бездротові навушники з активним шумопоглинанням, просторовим звуком та MagSafe зарядкою",
+        "image": "images/airpodspro2.jpg"
+    },
+    {
+        "id": "airpods",
+        "name": "Apple AirPods 3",
+        "price": 8999,
+        "image": "images/airpods3.jpg",
+        "description": "Бездротові навушники з просторовим звуком",
+        "type": "Аудіо"
+    },
+    {
+        "name": "Samsung Galaxy Buds2 Pro",
+        "type": "headphones",
+        "brand": "Samsung",
+        "price": 6999,
+        "description": "Бездротові навушники з активним шумопоглинанням та Hi-Fi звуком",
+        "image": "images/buds2pro.jpg"
+    },
+    {
+        "id": "powerbank",
+        "name": "Power Bank 20000mAh",
+        "price": 1999,
+        "image": "images/powerbank.jpg",
+        "description": "Зовнішній акумулятор з швидкою зарядкою",
+        "type": "Зарядка"
+    },
+    {
+        "id": "charger",
+        "name": "Зарядний пристрій 65W",
+        "price": 999,
+        "image": "images/charger.jpg",
+        "description": "Швидкий зарядний пристрій з GaN технологією",
+        "type": "Зарядка"
+    },
+    {
+        "id": "cable",
+        "name": "Кабель USB-C",
+        "price": 399,
+        "image": "images/cable.jpg",
+        "description": "Кабель USB-C з підтримкою швидкої зарядки",
+        "type": "Зарядка"
+    }
+] 
