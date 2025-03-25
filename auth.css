@@ -1,14 +1,29 @@
 /* Стилі для модального вікна автентифікації */
+#authModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
 #authModal .modal-content {
     background-color: #1e3c72;
     padding: 30px;
     border-radius: 10px;
     width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     color: white;
-    position: relative;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 #authModal .auth-container {
@@ -33,84 +48,457 @@
 }
 
 #authModal .auth-tab.active {
-    color: #00ff00;
-    border-bottom: 2px solid #00ff00;
+    color: #00bcd4;
+    border-bottom: 2px solid #00bcd4;
     margin-bottom: -2px;
 }
 
 #authModal .auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#authModal .auth-form.active {
+    display: flex;
+}
+
+#authModal .form-group {
+    position: relative;
+}
+
+#authModal .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#authModal .form-group input:focus {
+    outline: none;
+    border-color: #00bcd4;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#authModal .form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#authModal .auth-button {
+    background: #00bcd4;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#authModal .auth-button:hover {
+    background: #0097a7;
+    transform: translateY(-2px);
+}
+
+#authModal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#authModal .close:hover {
+    color: white;
+}
+
+/* Темна тема */
+body.dark-theme #authModal .modal-content {
+    background: #121212;
+    box-shadow: 0 0 20px rgba(0, 188, 212, 0.2);
+}
+
+body.dark-theme #authModal .auth-tab.active {
+    color: #00bcd4;
+    border-bottom-color: #00bcd4;
+}
+
+body.dark-theme #authModal .form-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme #authModal .form-group input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #00bcd4;
+}
+
+body.dark-theme #authModal .auth-button {
+    background: #00bcd4;
+}
+
+body.dark-theme #authModal .auth-button:hover {
+    background: #0097a7;
+}
+
+/* Анімація для фону */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Стилі для сторінки реєстрації/входу */
+body.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #1a237e, #0d47a1, #1565c0);
+    animation: gradientBG 15s ease infinite;
+    background-size: 400% 400%;
+    position: relative;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+    background: linear-gradient(45deg, rgba(26, 35, 126, 0.9), rgba(13, 71, 161, 0.9), rgba(21, 101, 192, 0.9));
+    background-size: 300% 300%;
+    animation: containerGradient 15s ease infinite;
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+@keyframes containerGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.auth-box {
+    padding: 40px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    gap: 15px;
+}
+
+.auth-logo img {
+    height: 50px;
+    width: auto;
+}
+
+.auth-logo span {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    z-index: 1;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.auth-submit:hover {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 25px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.auth-links a:hover {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-5px);
+}
+
+/* Повідомлення про помилку та успіх */
+.error-message,
+.success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+}
+
+.error-message {
+    background: linear-gradient(45deg, #ff5252, #ff1744);
+}
+
+.success-message {
+    background: linear-gradient(45deg, #00c853, #69f0ae);
+}
+
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+/* Затемнення фону */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+}
+
+/* Адаптивність */
+@media (max-width: 480px) {
+    .auth-container {
+        margin: 10px;
+    }
+
+    .auth-box {
+        padding: 20px;
+    }
+
+    .auth-page .form-group input {
+        padding: 12px 12px 12px 40px;
+        font-size: 14px;
+    }
+
+    .auth-submit {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .back-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Темна тема */
+body.auth-page.dark-theme {
+    background: linear-gradient(-45deg, #121212, #1e1e1e, #2a2a2a, #333333);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+body.auth-page.dark-theme .auth-box {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+body.auth-page.dark-theme .form-group input {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+body.auth-page.dark-theme .form-group input:focus {
+    border-color: #00bcd4;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Стилі для профілю користувача */
+.profile-info {
+    padding: 20px;
+    color: white;
+}
+
+.profile-info h2 {
+    margin-bottom: 20px;
+    color: #00bcd4;
+    text-align: center;
+}
+
+.profile-details {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-#authModal .auth-form input {
-    padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+.profile-details p {
+    margin: 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
-    font-size: 14px;
-    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-details strong {
+    color: #00bcd4;
+}
+
+/* Темна тема для профілю */
+body.dark-theme .profile-info h2 {
+    color: #00bcd4;
+}
+
+body.dark-theme .profile-details p {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .profile-details strong {
+    color: #00bcd4;
+}
+
+/* Стилі для імені користувача в кнопці */
+.user-name:hover {
+}
+
+/* Стилі для кнопки авторизації в хедері */
+.header-auth-button {
+    background: linear-gradient(90deg, #00bcd4, #2196f3);
     color: white;
-    transition: all 0.3s ease;
-}
-
-#authModal .auth-form input:focus {
-    outline: none;
-    border-color: #00ff00;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-}
-
-#authModal .auth-form input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-#authModal .auth-form button {
-    padding: 12px;
-    background-color: #00ff00;
-    color: #000;
+    padding: 8px 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 14px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 5px;
 }
 
-#authModal .auth-form button:hover {
-    background-color: #00cc00;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-}
-
-#authModal .close {
-    color: #ff3333;
-    font-size: 25px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    transition: color 0.3s ease;
-}
-
-#authModal .close:hover {
-    color: #ff0000;
-    cursor: pointer;
-}
-
-/* Темна тема для модального вікна автентифікації */
-.dark-mode #authModal .modal-content {
-    background-color: #121212;
-}
-
-.dark-mode #authModal .auth-form input {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.dark-mode #authModal .auth-form button {
-    background-color: #4caf50;
-    color: white;
-}
-
-.dark-mode #authModal .auth-form button:hover {
-    background-color: #45a049;
+.header-auth-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
 } 

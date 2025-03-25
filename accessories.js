@@ -328,69 +328,124 @@ function filterAccessories() {
     displayAccessories(filteredAccessories);
 }
 
-function displayAccessories(accessoriesToShow = accessories) {
-    const catalog = document.getElementById('accessories-catalog');
-    catalog.innerHTML = '';
+function displayAccessories(accessories) {
+    const container = document.getElementById('catalog');
+    container.innerHTML = '';
     
     // Розраховуємо індекси для поточної сторінки
-    const startIndex = (accessoryCurrentPage - 1) * 8;
-    const endIndex = startIndex + 8;
-    
-    // Отримуємо аксесуари для поточної сторінки
-    const accessoriesOnPage = accessoriesToShow.slice(startIndex, endIndex);
+    const startIndex = (accessoryCurrentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const accessoriesOnPage = accessories.slice(startIndex, endIndex);
     
     accessoriesOnPage.forEach(accessory => {
         const card = document.createElement('div');
-        card.className = 'accessory-card';
-        card.innerHTML = `
-            <img src="${accessory.image}" alt="${accessory.name}" class="accessory-image">
-            <h3 class="accessory-name">${accessory.name}</h3>
-            <p class="accessory-brand">${accessory.brand}</p>
-            <p class="accessory-price">${accessory.price} грн</p>
-            <div class="card-buttons">
-                <button class="view-details" onclick="showAccessoryDetails('${accessory.name}')">
-                    <i class="fas fa-info-circle"></i> Деталі
-                </button>
-                <button class="buy-button" onclick="addToCart('${accessory.name}', ${accessory.price})">
-                    <i class="fas fa-shopping-cart"></i> Купити
-                </button>
-            </div>
-        `;
-        catalog.appendChild(card);
+        card.className = 'phone-card';
+        
+        const img = document.createElement('img');
+        img.src = accessory.image;
+        img.alt = accessory.name;
+        img.className = 'phone-image';
+        
+        img.onerror = function() {
+            this.src = 'images/placeholder.jpg';
+        };
+
+        const title = document.createElement('h3');
+        title.textContent = accessory.name;
+
+        const brand = document.createElement('p');
+        brand.textContent = `Бренд: ${accessory.brand}`;
+
+        const type = document.createElement('p');
+        type.textContent = `Тип: ${accessory.type}`;
+
+        const price = document.createElement('p');
+        price.textContent = `${accessory.price} грн`;
+
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = 'card-buttons';
+
+        const detailsButton = document.createElement('button');
+        detailsButton.className = 'details-button';
+        detailsButton.innerHTML = '<i class="fas fa-info-circle"></i> Деталі';
+        detailsButton.onclick = () => showAccessoryDetails(accessory);
+
+        const buyButton = document.createElement('button');
+        buyButton.className = 'buy-button';
+        buyButton.innerHTML = '<i class="fas fa-shopping-cart"></i> Купити';
+        buyButton.onclick = () => addToCart(accessory);
+
+        buttonsContainer.appendChild(detailsButton);
+        buttonsContainer.appendChild(buyButton);
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(brand);
+        card.appendChild(type);
+        card.appendChild(price);
+        card.appendChild(buttonsContainer);
+
+        container.appendChild(card);
     });
 
     // Оновлюємо номер сторінки
-    document.getElementById("pageNumber").textContent = accessoryCurrentPage;
-}
+    const pageNumber = document.getElementById("pageNumber");
+    if (pageNumber) {
+        pageNumber.textContent = accessoryCurrentPage;
+    }
 
-function showAccessoryDetails(accessoryName) {
-    const accessory = accessories.find(item => item.name === accessoryName);
-    if (!accessory) return;
-
-    const modal = document.getElementById("phoneModal");
-    const modalContent = modal.querySelector(".modal-content");
+    // Оновлюємо видимість кнопок пагінації
+    const prevButton = document.querySelector('.pagination button:first-child');
+    const nextButton = document.querySelector('.pagination button:last-child');
     
-    modalContent.innerHTML = `
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-image">
-            <img id="modalImage" src="${accessory.image}" alt="${accessory.name}">
-        </div>
-        <div class="modal-info">
-            <h2 id="modalTitle">${accessory.name}</h2>
-            <p><strong>Ціна:</strong> <span id="modalPrice">${accessory.price}</span> грн</p>
-            <p><strong>Бренд:</strong> <span id="modalBrand">${accessory.brand}</span></p>
-            <p><strong>Тип:</strong> <span id="modalType">${accessory.type}</span></p>
-            <p><strong>Опис:</strong> <span id="modalDescription">${accessory.description}</span></p>
-            <button class="buy-button" onclick="addToCart(${JSON.stringify(accessory).replace(/"/g, '&quot;')})">
-                <i class="fas fa-shopping-cart"></i> Купити
-            </button>
-        </div>
-    `;
-
-    modal.style.display = "flex";
+    if (prevButton) {
+        prevButton.disabled = accessoryCurrentPage === 1;
+    }
+    if (nextButton) {
+        nextButton.disabled = endIndex >= accessories.length;
+    }
 }
 
-function closeModal() {
+function showAccessoryDetails(accessory) {
+    const modal = document.getElementById('phoneModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalBrand = document.getElementById('modalBrand');
+    const modalType = document.getElementById('modalType');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    modalImage.src = accessory.image;
+    modalImage.alt = accessory.name;
+    modalImage.onerror = () => {
+        modalImage.src = 'images/placeholder.jpg';
+    };
+    
+    modalTitle.textContent = accessory.name;
+    modalPrice.textContent = `${accessory.price} грн`;
+    modalBrand.textContent = `Бренд: ${accessory.brand}`;
+    modalType.textContent = `Тип: ${accessory.type}`;
+    modalDescription.textContent = accessory.description;
+    
+    modal.style.display = 'flex';
+    currentAccessory = accessory;
+    
+    // Ініціалізуємо обробники подій відгуків
+    initializeReviewHandlers();
+    // Відображаємо існуючі відгуки
+    displayReviews(accessory.name);
+    
+    // Скидаємо форму відгуку
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+        reviewForm.style.display = 'none';
+        reviewForm.querySelector('.review-textarea').value = '';
+        selectedRating = 0;
+        updateStarRating(0);
+    }
+}
+
+function closePhoneModal() {
     document.getElementById("phoneModal").style.display = "none";
 }
 
@@ -400,10 +455,7 @@ function changePage(direction) {
     filterAccessories();
 }
 
-function addToCart(accessoryName, accessoryPrice) {
-    const accessory = accessories.find(item => item.name === accessoryName);
-    if (!accessory) return;
-
+function addToCart(accessory) {
     // Отримуємо поточний кошик або створюємо новий
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
@@ -415,9 +467,12 @@ function addToCart(accessoryName, accessoryPrice) {
     } else {
         cart.push({
             name: accessory.name,
-            price: accessoryPrice,
+            price: accessory.price,
+            type: accessory.type,
+            brand: accessory.brand,
+            image: accessory.image,
             quantity: 1,
-            type: 'accessory'
+            itemType: 'accessory'
         });
     }
     

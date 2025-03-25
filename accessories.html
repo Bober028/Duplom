@@ -17,11 +17,15 @@
             </a>
         </div>
         <div class="header-buttons">
-            <button class="auth-button" onclick="showAuthModal()">
-                <i class="fas fa-user"></i> Увійти/Зареєструватися
-            </button>
-            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-            <button class="accessories-button active" onclick="window.location.href='accessories.html'">
+            <div class="auth-buttons" id="authButtons">
+                <button class="auth-button" onclick="window.location.href='login.html'">
+                    <i class="fas fa-sign-in-alt"></i> Увійти
+                </button>
+                <button class="auth-button" onclick="window.location.href='register.html'">
+                    <i class="fas fa-user-plus"></i> Зареєструватись
+                </button>
+            </div>
+            <button class="accessories-button" onclick="window.location.href='accessories.html'">
                 <i class="fas fa-mobile-alt"></i> Аксесуари
             </button>
             <button class="cart-button" onclick="window.location.href='cart.html'">
@@ -34,29 +38,31 @@
         <div class="container">
             <h1>Аксесуари для телефонів</h1>
             <div class="filters">
-                <select id="accessoryType" onchange="filterAccessories()">
-                    <option value="all">Всі типи</option>
-                    <option value="case">Чохли</option>
-                    <option value="screen">Захисні плівки/скло</option>
-                    <option value="charger">Зарядні пристрої</option>
-                    <option value="headphones">Навушники</option>
-                    <option value="powerbank">Повербанки</option>
-                    <option value="holder">Тримачі</option>
-                    <option value="other">Інше</option>
-                </select>
-                <select id="brand" onchange="filterAccessories()">
-                    <option value="all">Всі бренди</option>
-                    <option value="Apple">Apple</option>
-                    <option value="Samsung">Samsung</option>
-                    <option value="Xiaomi">Xiaomi</option>
-                    <option value="Other">Інші</option>
-                </select>
-                <input type="number" id="minPrice" placeholder="Мін. ціна" onchange="filterAccessories()">
-                <input type="number" id="maxPrice" placeholder="Макс. ціна" onchange="filterAccessories()">
+                <div class="filters-row">
+                    <select id="accessoryType" onchange="filterAccessories()">
+                        <option value="all">Всі типи</option>
+                        <option value="case">Чохли</option>
+                        <option value="screen">Захисні плівки/скло</option>
+                        <option value="charger">Зарядні пристрої</option>
+                        <option value="headphones">Навушники</option>
+                        <option value="powerbank">Повербанки</option>
+                        <option value="holder">Тримачі</option>
+                        <option value="other">Інше</option>
+                    </select>
+                    <select id="brand" onchange="filterAccessories()">
+                        <option value="all">Всі бренди</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Xiaomi">Xiaomi</option>
+                        <option value="Other">Інші</option>
+                    </select>
+                    <input type="number" id="minPrice" placeholder="Мін. ціна" onchange="filterAccessories()">
+                    <input type="number" id="maxPrice" placeholder="Макс. ціна" onchange="filterAccessories()">
+                </div>
                 <button class="search-button" onclick="filterAccessories()">Пошук</button>
             </div>
             
-            <div class="accessories-grid" id="accessories-catalog">
+            <div id="catalog" class="catalog">
                 <!-- Аксесуари будуть додані через JavaScript -->
             </div>
             
@@ -97,11 +103,60 @@
     <!-- Модальне вікно для деталей аксесуара -->
     <div id="phoneModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="document.getElementById('phoneModal').style.display='none'">&times;</span>
-            <div class="modal-info">
-                <h2 id="modalTitle"></h2>
-                <p>Ціна: <strong id="modalPrice"></strong> грн</p>
-                <p id="modalDescription"></p>
+            <button class="close-button" onclick="closePhoneModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <img id="modalImage" class="modal-image" src="" alt="">
+                <div class="modal-info">
+                    <h2 id="modalTitle" class="modal-title"></h2>
+                    <p id="modalPrice" class="modal-price"></p>
+                    <p id="modalBrand" class="modal-brand"></p>
+                    <p id="modalType" class="modal-type"></p>
+                </div>
+            </div>
+            
+            <div class="modal-description" id="modalDescription"></div>
+            
+            <button class="modal-buy-button" onclick="addToCart(currentAccessory)">
+                <i class="fas fa-shopping-cart"></i>
+                ДОДАТИ В КОШИК
+            </button>
+            
+            <!-- Секція відгуків -->
+            <div class="reviews-section">
+                <div class="reviews-header">
+                    <h3 class="reviews-title">
+                        <i class="fas fa-comments"></i>
+                        Відгуки
+                    </h3>
+                    <button class="add-review-button" id="addReviewBtn">
+                        <i class="fas fa-plus"></i>
+                        Додати відгук
+                    </button>
+                </div>
+                
+                <!-- Форма для додавання відгуку -->
+                <div class="review-form" id="reviewForm">
+                    <div class="rating-select">
+                        <button class="star-button" data-rating="1">★</button>
+                        <button class="star-button" data-rating="2">★</button>
+                        <button class="star-button" data-rating="3">★</button>
+                        <button class="star-button" data-rating="4">★</button>
+                        <button class="star-button" data-rating="5">★</button>
+                    </div>
+                    <textarea class="review-textarea" placeholder="Напишіть ваш відгук..."></textarea>
+                    <button class="submit-review">
+                        <i class="fas fa-paper-plane"></i>
+                        Відправити
+                    </button>
+                </div>
+                
+                <!-- Список відгуків -->
+                <div class="reviews-list" id="reviewsList">
+                    <!-- Відгуки будуть додаватися динамічно -->
+                </div>
             </div>
         </div>
     </div>
